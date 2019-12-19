@@ -1,0 +1,9 @@
+name: hello-world
+image: okteto/php:7
+persistentVolume: false
+command:
+- bash
+forward: 
+  - 8080:8080
+reverse:
+  - 9000:9000
