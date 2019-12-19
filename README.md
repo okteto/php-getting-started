@@ -84,7 +84,8 @@ Open the `index.php` file in your favorite local IDE and modify the response mes
 
 ```php
 <?php
-  echo("Hello World from the cluster!");
+$message = "Hello World from the cluster!";
+echo($message);
 ```
 
 Okteto will synchronize your changes to your development environment in Kubernetes, and the PHP webserver will reload them automatically. Call your application from a local shell to validate the changes:
