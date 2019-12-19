@@ -10,6 +10,7 @@ Get a local version of the PHP Sample App by executing the following commands:
 
 ```console
 $ git clone https://github.com/okteto/php-getting-started
+$ cd php-getting-started
 ```
 
 The `k8s.yml` file contains the raw Kubernetes manifests to deploy the PHP Sample App. Run the application by executing:

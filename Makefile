@@ -2,6 +2,6 @@
 build:
 	okteto build -t okteto/hello-world:php .
 
-.PHONY: start
-start:
+.PHONY: push
+push:
 	php -S 0.0.0.0:8080
