@@ -115,6 +115,8 @@ The execution will halt at your breakpoint. You can then inspect the request, th
 
 Cool! Your code changes were instantly applied to Kubernetes. No commit, build or push required 😎!
 
+Once you are done debugging, press the `stop` button to detach from the request.
+
 > The development environment we are using in this sample is configured to  automatically enable xdebug, remote debugging and to set a reverse tunnel on port 9000. This allows you to take advantage of PHPStorm's [Zero Configuration Debugging](https://www.jetbrains.com/help/phpstorm/zero-configuration-debugging.html) to make debugging extremely simple.
 
 ## Step 5: Cleanup
