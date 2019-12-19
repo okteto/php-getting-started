@@ -96,7 +96,26 @@ $ curl localhost:8080
 Hello world from the cluster!
 ```
 
+## Step 4: Debug directly in Kubernetes
+
+Okteto enables you to debug your applications directly from your favorite IDE. Let's take a look at how that works with [PHPStorm](https://www.jetbrains.com/phpstorm/), one of the most popular IDEs for PHP development.
+
+If you haven't already, fire up PHP Storm and load this project there. 
+
+Once the project is loaded, open `index.php` and set a breakpoint in line 2. Then, click on the `Start Listen PHP Debug Connections` button on the PhpStorm toolbar. 
+
+Then call your application by running the command below from a local shell.
+
+```console
+$ curl localhost:8080
+```
+The execution will halt at your breakpoint. You can then inspect the request, the available variables, etc...
+
+![Debug directly in Kubernetes](images/halt.png)
+
 Cool! Your code changes were instantly applied to Kubernetes. No commit, build or push required 😎!
+
+> The development environment we are using in this sample is configured to  automatically enable xdebug, remote debugging and to set a reverse tunnel on port 9000. This allows you to take advantage of PHPStorm's [Zero Configuration Debugging](https://www.jetbrains.com/help/phpstorm/zero-configuration-debugging.html) to make debugging extremely simple.
 
 ## Step 5: Cleanup
 
