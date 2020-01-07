@@ -51,7 +51,6 @@ The `okteto up` command starts a [Kubernetes development environment](https://ok
 
 - The PHP Sample App container is updated with the docker image `okteto/php:7`. This image contains the required dev tools to build, test and run the PHP Sample App.
 - A [file synchronization service](https://okteto.com/docs/reference/file-synchronization/index.html) is created to keep your changes up-to-date between your local filesystem and your application pods.
-- A volume is attached to persist the Go cache and packages in your Kubernetes development environment.
 - Container ports 8080 (the application) is forwarded to localhost.
 - Container ports 9000 (the debugger) is reverse forwarded from the development environment to localhost.
 - A remote shell is started in your Kubernetes development environment. Build, test and run your application as if you were in your local machine.
