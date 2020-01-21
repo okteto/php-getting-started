@@ -9,5 +9,8 @@
             "email": "rberrelleza@gmail.com"
         }
     ],
+    "config": {
+        "vendor-dir": "/root/php/vendor"
+    },
     "require": {}
 }

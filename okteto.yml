@@ -1,6 +1,8 @@
 name: hello-world
 image: okteto/php:7
 command: ["bash"]
+volumes:
+  - /root/php/vendor
 forward: 
   - 8080:8080
 reverse:
