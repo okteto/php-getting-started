@@ -1,7 +1,9 @@
 name: hello-world
-image: okteto/php:7
-command: ["bash"]
+image: okteto/hello-world:php-dev
+command: [ "php", "-S", "0.0.0.0:8080"]
 forward: 
   - 8080:8080
 reverse:
   - 9000:9000
+persistentVolume:
+  enabled: false
