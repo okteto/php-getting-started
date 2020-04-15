@@ -1,2 +1,3 @@
-/.git
-/vendor
+.git
+vendor
+README.md
