@@ -1,5 +1,6 @@
 name: hello-world
 image: okteto/hello-world:php-dev
+workdir: /app
 command: [ "php", "-S", "0.0.0.0:8080"]
 forward: 
   - 8080:8080

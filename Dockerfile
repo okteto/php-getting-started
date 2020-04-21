@@ -1,6 +1,6 @@
 FROM php:7 as base
 WORKDIR /app
-COPY index.php /app
+COPY . /app
 
 ####################################
 
