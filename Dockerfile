@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y zip git libzip-dev && \
   /usr/local/bin/composer global require laravel/installer
 
 COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+COPY php.ini-development /usr/local/etc/php/php.ini
 
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.composer/vendor/bin/:/okteto/vendor/bin/
 
