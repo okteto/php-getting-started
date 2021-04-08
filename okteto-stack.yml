@@ -1,0 +1,12 @@
+name: hello-world
+services:
+  hello-world:
+    public: true
+    image: okteto.dev/hello-world:php-dev
+    build: .
+    replicas: 1
+    ports:
+      - 8080
+    resources:
+      cpu: 100m
+      memory: 128Mi
