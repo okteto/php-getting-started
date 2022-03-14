@@ -1,8 +1,9 @@
 name: hello-world
 image: okteto/hello-world:php-dev
 workdir: /app
+autocreate: true
 command: [ "php", "-S", "0.0.0.0:8080"]
-forward: 
+forward:
   - 8080:8080
 reverse:
   - 9000:9000
