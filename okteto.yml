@@ -1,10 +1,19 @@
-name: hello-world
-image: okteto/hello-world:php-dev
-workdir: /app
-command: [ "php", "-S", "0.0.0.0:8080"]
-forward: 
-  - 8080:8080
-reverse:
-  - 9000:9000
-persistentVolume:
-  enabled: false
+build:
+  hello-world:
+    image: okteto.dev/php-hello-world:1.0.0
+    context: .
+  hello-world-dev:
+    context: .
+    target: dev
+deploy:
+  - kubectl apply -f k8s.yml
+dev:
+  hello-world:
+    image: ${OKTETO_BUILD_HELLO_WORLD_DEV_IMAGE}
+    command: bash
+    sync:
+      - .:/app
+    reverse:
+      - 9000:9000
+    volumes:
+      - /root/.composer/cache
