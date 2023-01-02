@@ -1,4 +1,4 @@
-FROM php:7 as base
+FROM php:8 as base
 WORKDIR /app
 COPY . /app
 
@@ -6,11 +6,11 @@ COPY . /app
 
 FROM base AS dev
 
-RUN apt-get update && apt-get install -y zip git libzip-dev && \ 
+RUN apt-get update && apt-get install -y zip git libzip-dev && \
   pecl install xdebug && echo 'zend_extension="xdebug.so"' > /usr/local/etc/php/conf.d/xdebug.ini && \
   pecl install zip && echo 'extension=zip.so' > /usr/local/etc/php/conf.d/zip.ini && \
   php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-  php composer-setup.php --install-dir /usr/local/bin && \ 
+  php composer-setup.php --install-dir /usr/local/bin && \
   ln -s /usr/local/bin/composer.phar /usr/local/bin/composer && \
   unlink composer-setup.php && \
   /usr/local/bin/composer global require laravel/installer
