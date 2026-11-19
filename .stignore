@@ -1,2 +1,13 @@
+# Files that "okteto up" does not synchronize with the development container.
+
+# Git metadata: large, and only needed on your machine
 .git
-vendor
+
+# Generated inside the development container
+/vendor
+/junit.xml
+
+# Local-only files
+.vscode
+.idea
+.DS_Store

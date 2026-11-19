@@ -1,28 +1,23 @@
-FROM php:8.5 AS base
-WORKDIR /app
-COPY . /app
+FROM php:8.5.12-cli-trixie AS dev
 
-####################################
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends unzip && \
+    rm -rf /var/lib/apt/lists/* && \
+    pecl install xdebug-3.5.3 && \
+    docker-php-ext-enable xdebug && \
+    cp "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
+COPY --from=composer:2.11.2 /usr/bin/composer /usr/local/bin/composer
+ENV COMPOSER_ALLOW_SUPERUSER=1
+COPY xdebug.ini $PHP_INI_DIR/conf.d/
 
-FROM base AS dev
+WORKDIR /usr/src/app
+COPY composer.json composer.lock ./
+RUN composer install
+COPY . .
 
-RUN apt-get update && apt-get install -y zip git libzip-dev && \
-  pecl install xdebug && echo 'zend_extension="xdebug.so"' > /usr/local/etc/php/conf.d/xdebug.ini && \
-  pecl install zip && echo 'extension=zip.so' > /usr/local/etc/php/conf.d/zip.ini && \
-  php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-  php composer-setup.php --install-dir /usr/local/bin && \
-  ln -s /usr/local/bin/composer.phar /usr/local/bin/composer && \
-  unlink composer-setup.php && \
-  /usr/local/bin/composer global require laravel/installer
+FROM php:8.5.12-cli-alpine3.24 AS prod
 
-COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
-COPY php.ini-development /usr/local/etc/php/php.ini
-
-ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.composer/vendor/bin/:/okteto/vendor/bin/
-
-####################################
-
-FROM base AS prod
-
-EXPOSE 8080
-CMD [ "php", "-S", "0.0.0.0:8080" ]
+RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+WORKDIR /usr/src/app
+COPY *.php ./
+CMD ["php", "-S", "0.0.0.0:8080"]

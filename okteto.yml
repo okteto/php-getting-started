@@ -1,12 +1,34 @@
+build:
+  dev:
+    context: .
+    target: dev
+  hello-world:
+    context: .
+    target: prod
+    depends_on:
+      - dev
+
 deploy:
-  - kubectl apply -f k8s.yml
+  - envsubst < k8s.yml | kubectl apply -f -
+
+test:
+  unit:
+    image: ${OKTETO_BUILD_DEV_IMAGE}
+    caches:
+      - /root/.composer/cache
+    commands:
+      - XDEBUG_MODE=off composer install
+      - XDEBUG_MODE=off vendor/bin/phpunit --log-junit junit.xml tests
+    artifacts:
+      - junit.xml
+
 dev:
   hello-world:
-    image: ghcr.io/okteto/php-getting-started:dev
-    command: bash
+    image: ${OKTETO_BUILD_DEV_IMAGE}
+    command: php -S 0.0.0.0:8080
     sync:
-      - .:/app
+      - .:/usr/src/app
+    persistentVolume:
+      enabled: false
     reverse:
-      - 9000:9000
-    volumes:
-      - /root/.composer/cache
+      - 9003:9003
