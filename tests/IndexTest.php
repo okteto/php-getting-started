@@ -2,12 +2,24 @@
 
 use PHPUnit\Framework\TestCase;
 
+require_once __DIR__ . '/../index.php';
+
 final class IndexTest extends TestCase
 {
-    public function testIndexSaysHelloWorld(): void
+    public function testHello(): void
     {
-        $this->expectOutputString('Hello World!');
+        ob_start();
+        hello();
+        $info = json_decode(ob_get_clean(), true);
 
-        require __DIR__ . '/../index.php';
+        $this->assertSame(MESSAGE, $info['message']);
+        $this->assertStringStartsWith('PHP ', $info['runtime']);
+    }
+
+    public function testPage(): void
+    {
+        $this->expectOutputRegex('/id="message"/');
+
+        page();
     }
 }

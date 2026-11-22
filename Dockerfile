@@ -12,7 +12,11 @@ COPY xdebug.ini $PHP_INI_DIR/conf.d/
 
 WORKDIR /usr/src/app
 COPY composer.json composer.lock ./
-RUN composer install
+# The cache mount keeps Composer's download cache in the Okteto Build Service,
+# which reuses it between builds. The tests of the Okteto Manifest use the
+# same cache
+RUN --mount=type=cache,target=/root/.composer/cache \
+    composer install
 COPY . .
 
 FROM php:8.5.12-cli-alpine3.24 AS prod
@@ -20,4 +24,5 @@ FROM php:8.5.12-cli-alpine3.24 AS prod
 RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 WORKDIR /usr/src/app
 COPY *.php ./
+COPY static static
 CMD ["php", "-S", "0.0.0.0:8080"]
